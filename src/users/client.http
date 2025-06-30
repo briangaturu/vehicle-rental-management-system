@@ -1,0 +1,35 @@
+// default route
+
+###
+GET http://localhost:5000/api/users/
+
+###
+POST http://localhost:5000/api/users
+content-type: application/json
+
+{
+    "firstname": "Brian",
+    "lastname": "Ireri",
+    "email": "briangaturu03@gmail.com",
+    "password":"2103684",
+    "contact":"+254796598257",
+    "address":"123 Othaya,Nyeri",
+    "role":"admin"
+}
+
+###
+DELETE http://localhost:5000/api/users/1
+
+###
+PUT http://localhost:5000/api/users/2
+content-type: application/json
+
+{
+ "firstname": "jane",
+    "lastname": "maina",
+    "email": "jane03@gmail.com",
+    "password":"password2",
+    "contact":"+254702345678",
+    "address":"789 kagere Road, Mombasa",
+    "role":"user"   
+}
