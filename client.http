@@ -33,3 +33,26 @@ content-type: application/json
     "address":"789 kagere Road, Mombasa",
     "role":"user"   
 }
+
+###
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "firstname": "Michael",
+    "lastname": "Johnson",
+    "email": "michael@example.com",
+    "password": "password3",
+    "contact": "+254703456789",
+    "address": "789 Kisumu Avenue, Kisumu",
+    "role": "user"
+}
+
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "michael@example.com",
+    "password": "password3" 
+}

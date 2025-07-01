@@ -1,6 +1,8 @@
 import express, { Application,Response } from 'express';
 import dotenv from 'dotenv';
 import { userRouter } from './users/users.route';
+import { authRouter } from './auth/auth.route';
+
 
 
 dotenv.config();
@@ -20,10 +22,11 @@ app.get('/', (req, res:Response) => {
 
 // Importing user routes
 app.use('/api',userRouter)
+app.use('/api',authRouter)
 
 const PORT = process.env.PORT || 5000;
 
-//  then start the server
+
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
