@@ -1,7 +1,7 @@
 // default route
 
 ###
-GET http://localhost:5000/api/users/
+GET http://localhost:5000/api/users/1
 
 ###
 POST http://localhost:5000/api/users
@@ -56,3 +56,37 @@ Content-Type: application/json
   "email": "michael@example.com",
     "password": "password3" 
 }
+
+//vehicles
+###
+GET http://localhost:5000/api/vehicles
+
+
+//create vehicles
+
+###
+POST http://localhost:5000/api/vehicles
+content-type: application/json
+
+{
+   "rentalRate": "50.00",
+    "availability": "false",
+    "vehicleSpecId" :1
+}
+//delete vehicleby id
+###
+DELETE http://localhost:5000/api/vehicles/1
+
+//update vehicles
+
+###
+PUT http://localhost:5000/api/vehicles/2
+content-type: application/json
+
+{
+ "rentalRate": "50.00",
+    "availability": "false",
+    "vehicleSpecId" :1
+}
+
+

@@ -40,8 +40,8 @@ export const users = pgTable("users", {
 // Vehicle Specifications Table
 // -----------------------------
 
-export const vehicleSpecifications = pgTable("vehicle_specifications", {
-  vehicleSpecId: serial("vehicleSpecAd").primaryKey(),
+export const vehicleSpecifications = pgTable("vehicleSpecifications", {
+  vehicleSpecId: serial("vehicleSpecId").primaryKey(),
   manufacturer: varchar("manufacturer", { length: 255 }).notNull(),
   model: varchar("model", { length: 255 }).notNull(),
   year: integer("year").notNull(),
@@ -61,9 +61,9 @@ export const vehicles = pgTable("vehicles", {
   vehicleId: serial("vehicleId").primaryKey(),
   vehicleSpecId: integer("vehicleSpecId")
     .notNull()
-    .references(() => vehicleSpecifications.vehicleSpecId),
+    .references(() => vehicleSpecifications.vehicleSpecId, { onDelete: "cascade" }),
   rentalRate: numeric("rentalRate", { precision: 10, scale: 2 }).notNull(),
-  availability: boolean("availability").default(true).notNull(),
+  availability: boolean("availability").default(true),
   createdAt: timestamp("createdAt").defaultNow(),
   updatedAt: timestamp("updatedAt").defaultNow(),
 });
@@ -87,15 +87,9 @@ export const locations = pgTable("locations", {
 
 export const bookings = pgTable("bookings", {
   bookingId: serial("bookingId").primaryKey(),
-  userId: integer("userId")
-    .notNull()
-    .references(() => users.userId),
-  vehicleId: integer("vehicleId")
-    .notNull()
-    .references(() => vehicles.vehicleId),
-  locationId: integer("locationId")
-    .notNull()
-    .references(() => locations.locationId),
+  userId: integer("userId").notNull().references(() => users.userId, { onDelete: "cascade" }),
+  vehicleId: integer("vehicleId").notNull().references(() => vehicles.vehicleId, { onDelete: "cascade" }),
+  locationId: integer("locationId").notNull().references(() => locations.locationId, { onDelete: "cascade" }),
   bookingDate: date("bookingDate").notNull(),
   returnDate: date("returnDate").notNull(),
   totalAmount: numeric("totalAmount", { precision: 10, scale: 2 }).notNull(),
@@ -112,7 +106,7 @@ export const payments = pgTable("payments", {
   paymentId: serial("paymentId").primaryKey(),
   bookingId: integer("bookingId")
     .notNull()
-    .references(() => bookings.bookingId),
+    .references(() => bookings.bookingId, { onDelete: "cascade" }),
   amount: numeric("amount", { precision: 10, scale: 2 }).notNull(),
   paymentStatus: paymentStatusEnum("paymentStatus").default("Pending").notNull(),
   paymentDate: timestamp("paymentDate").defaultNow(),
@@ -130,7 +124,7 @@ export const supportTickets = pgTable("supporTickets", {
   ticketId: serial("ticketId").primaryKey(),
   userId: integer("userId")
     .notNull()
-    .references(() => users.userId),
+    .references(() => users.userId, { onDelete: "cascade" }),
   subject: varchar("subject", { length: 255 }).notNull(),
   description: text("description").notNull(),
   status: varchar("status", { length: 50 }).default("Open"),

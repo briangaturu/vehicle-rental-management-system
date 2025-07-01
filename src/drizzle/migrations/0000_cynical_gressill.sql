@@ -62,8 +62,8 @@ CREATE TABLE "users" (
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
-CREATE TABLE "vehicle_specifications" (
-	"vehicleSpecAd" serial PRIMARY KEY NOT NULL,
+CREATE TABLE "vehicleSpecifications" (
+	"vehicleSpecId" serial PRIMARY KEY NOT NULL,
 	"manufacturer" varchar(255) NOT NULL,
 	"model" varchar(255) NOT NULL,
 	"year" integer NOT NULL,
@@ -79,14 +79,14 @@ CREATE TABLE "vehicles" (
 	"vehicleId" serial PRIMARY KEY NOT NULL,
 	"vehicleSpecId" integer NOT NULL,
 	"rentalRate" numeric(10, 2) NOT NULL,
-	"availability" boolean DEFAULT true NOT NULL,
+	"availability" boolean DEFAULT true,
 	"createdAt" timestamp DEFAULT now(),
 	"updatedAt" timestamp DEFAULT now()
 );
 --> statement-breakpoint
-ALTER TABLE "bookings" ADD CONSTRAINT "bookings_userId_users_userId_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("userId") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "bookings" ADD CONSTRAINT "bookings_vehicleId_vehicles_vehicleId_fk" FOREIGN KEY ("vehicleId") REFERENCES "public"."vehicles"("vehicleId") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "bookings" ADD CONSTRAINT "bookings_locationId_locations_locationId_fk" FOREIGN KEY ("locationId") REFERENCES "public"."locations"("locationId") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "payments" ADD CONSTRAINT "payments_bookingId_bookings_bookingId_fk" FOREIGN KEY ("bookingId") REFERENCES "public"."bookings"("bookingId") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "supporTickets" ADD CONSTRAINT "supporTickets_userId_users_userId_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("userId") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "vehicles" ADD CONSTRAINT "vehicles_vehicleSpecId_vehicle_specifications_vehicleSpecAd_fk" FOREIGN KEY ("vehicleSpecId") REFERENCES "public"."vehicle_specifications"("vehicleSpecAd") ON DELETE no action ON UPDATE no action;
+ALTER TABLE "bookings" ADD CONSTRAINT "bookings_userId_users_userId_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("userId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "bookings" ADD CONSTRAINT "bookings_vehicleId_vehicles_vehicleId_fk" FOREIGN KEY ("vehicleId") REFERENCES "public"."vehicles"("vehicleId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "bookings" ADD CONSTRAINT "bookings_locationId_locations_locationId_fk" FOREIGN KEY ("locationId") REFERENCES "public"."locations"("locationId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "payments" ADD CONSTRAINT "payments_bookingId_bookings_bookingId_fk" FOREIGN KEY ("bookingId") REFERENCES "public"."bookings"("bookingId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "supporTickets" ADD CONSTRAINT "supporTickets_userId_users_userId_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("userId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "vehicles" ADD CONSTRAINT "vehicles_vehicleSpecId_vehicleSpecifications_vehicleSpecId_fk" FOREIGN KEY ("vehicleSpecId") REFERENCES "public"."vehicleSpecifications"("vehicleSpecId") ON DELETE cascade ON UPDATE no action;

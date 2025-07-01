@@ -1,5 +1,5 @@
 {
-  "id": "d9094258-25fd-429a-a46e-8f2e94537a08",
+  "id": "63e6c084-3b04-42ff-9e88-0f4691550d38",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -85,7 +85,7 @@
           "columnsTo": [
             "userId"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "bookings_vehicleId_vehicles_vehicleId_fk": {
@@ -98,7 +98,7 @@
           "columnsTo": [
             "vehicleId"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "bookings_locationId_locations_locationId_fk": {
@@ -111,7 +111,7 @@
           "columnsTo": [
             "locationId"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -249,7 +249,7 @@
           "columnsTo": [
             "bookingId"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -321,7 +321,7 @@
           "columnsTo": [
             "userId"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -416,12 +416,12 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.vehicle_specifications": {
-      "name": "vehicle_specifications",
+    "public.vehicleSpecifications": {
+      "name": "vehicleSpecifications",
       "schema": "",
       "columns": {
-        "vehicleSpecAd": {
-          "name": "vehicleSpecAd",
+        "vehicleSpecId": {
+          "name": "vehicleSpecId",
           "type": "serial",
           "primaryKey": true,
           "notNull": true
@@ -517,7 +517,7 @@
           "name": "availability",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": true
         },
         "createdAt": {
@@ -537,17 +537,17 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "vehicles_vehicleSpecId_vehicle_specifications_vehicleSpecAd_fk": {
-          "name": "vehicles_vehicleSpecId_vehicle_specifications_vehicleSpecAd_fk",
+        "vehicles_vehicleSpecId_vehicleSpecifications_vehicleSpecId_fk": {
+          "name": "vehicles_vehicleSpecId_vehicleSpecifications_vehicleSpecId_fk",
           "tableFrom": "vehicles",
-          "tableTo": "vehicle_specifications",
+          "tableTo": "vehicleSpecifications",
           "columnsFrom": [
             "vehicleSpecId"
           ],
           "columnsTo": [
-            "vehicleSpecAd"
+            "vehicleSpecId"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
