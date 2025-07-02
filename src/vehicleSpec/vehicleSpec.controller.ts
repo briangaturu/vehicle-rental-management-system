@@ -16,6 +16,7 @@ export const getAllVehicleSpecs = async(req: Request, res: Response ) =>{
     }
 }
 
+//get vehiclespecs by id
 export const getVehicleSpecsById = async(req: Request, res: Response ) =>{
     const specsId = parseInt(req.params.id);
     if(isNaN(specsId)){
@@ -29,7 +30,7 @@ export const getVehicleSpecsById = async(req: Request, res: Response ) =>{
             res.status(404).json({error: "No Vehicles Specs Found"})
         }
         else{
-            res.status(200).json(specsById);
+            res.status(200).json(specsById); 
         }
     } catch (error:any) {
         res.status(500).json({error: error.message || "error occured Failed to fetch Vehicle Specs"})
@@ -81,7 +82,7 @@ export const createVehicleSpec = async(req: Request, res: Response) =>{
    }
 }
 
-// create a vehicle spec
+// update vehicle spec
 export const updateVehicleSpec = async(req: Request, res: Response) =>{
     const vehicleSpecId = parseInt(req.params.id);
     if(isNaN(vehicleSpecId)){
@@ -106,6 +107,8 @@ export const updateVehicleSpec = async(req: Request, res: Response) =>{
    }
 }
 
+//delete vehicle spec
+
 export const deleteVehicleSpecsById = async(req: Request, res: Response ) =>{
     const specsId = parseInt(req.params.id);
     if(isNaN(specsId)){
@@ -115,7 +118,7 @@ export const deleteVehicleSpecsById = async(req: Request, res: Response ) =>{
 
     try {
         const deleteSpecs = deleteVehicleSpecService(specsId);
-            res.status(200).json({message:  " delete Vehicle Specs successfully"})
+            res.status(200).json({message:  "  Vehicle Specs deleted successfully"})
 
             return;
            

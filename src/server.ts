@@ -4,6 +4,7 @@ import { userRouter } from './users/users.route';
 import { authRouter } from './auth/auth.route';
 import { vehicleRouter } from './vehicles/vehicles.route';
 import { VehicleSpecsRouter } from './vehicleSpec/vehicleSpec.route';
+import { locationRouter } from './location/location.route';
 
 
 
@@ -27,6 +28,7 @@ app.use('/api',userRouter)
 app.use('/api',authRouter)
 app.use('/api',vehicleRouter)
 app.use('/api', VehicleSpecsRouter)
+app.use('/api', locationRouter)
 
 const PORT = process.env.PORT || 5000;
 

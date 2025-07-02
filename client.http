@@ -138,3 +138,43 @@ Content-Type: application/json
 
 ###
 DELETE   http://localhost:5000/api/vehicleSpecs/10
+
+//locations
+
+//get all locations
+###
+GET http://localhost:5000/api/location
+
+//get locations by id
+###
+GET http://localhost:5000/api/location/3
+
+
+###
+GET http://localhost:5000/api/location-search?name=nyeri
+
+//create a location
+###
+POST http://localhost:5000/api/location
+Content-Type: application/json
+
+{
+    "name": "Nyeri Branch",
+  "address": "Kimathi Street, Nyeri",
+  "contact": "+254723456789"
+}
+
+//update location
+###
+PUT  http://localhost:5000/api/location/2
+Content-Type: application/json
+
+{
+     "name":"kisumu branch",
+    "address":"Oginga  Street, Kisumu",
+    "contact":"+254723456789"
+}
+
+//delete location
+###
+DELETE   http://localhost:5000/api/location/1
