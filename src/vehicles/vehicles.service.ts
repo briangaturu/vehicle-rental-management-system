@@ -11,7 +11,10 @@ return await db.query.vehicles.findMany({});
 //GET VEHICLE BY ID
 export const getVehicleByIdServices = async(vehicleId:number):Promise<TVehicleSelect | undefined>=>{
  const res = await db.query.vehicles.findFirst({
-    where: eq(vehicles.vehicleId,vehicleId)
+    where: eq(vehicles.vehicleId,vehicleId),
+    with: {
+        vehicleSpec: true,
+    }
 });
 return res;
 }

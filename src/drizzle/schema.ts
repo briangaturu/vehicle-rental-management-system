@@ -1,15 +1,4 @@
-import {
-  pgTable,
-  serial,
-  varchar,
-  integer,
-  timestamp,
-  numeric,
-  pgEnum,
-  boolean,
-  text,
-  date,
-} from "drizzle-orm/pg-core";
+import {pgTable,serial,varchar,integer,timestamp,numeric,pgEnum,boolean,text,date,} from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 export const roleEnum = pgEnum("role", ["user", "admin", "disabled"]);
@@ -19,9 +8,9 @@ export const bookingStatusEnum = pgEnum("bookingStatus", ["Pending", "Confirmed"
 export const paymentStatusEnum = pgEnum("paymentStatus", ["Pending", "Paid", "Failed"]);
 export const paymentMethodEnum = pgEnum("paymentMethod", ["Stripe", "Mpesa"]);
 
-// -----------------------------
+
 // Users Table
-// -----------------------------
+
 
 export const users = pgTable("users", {
   userId: serial("userId").primaryKey(),
@@ -36,9 +25,9 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updatedAt").defaultNow(),
 });
 
-// -----------------------------
+
 // Vehicle Specifications Table
-// -----------------------------
+
 
 export const vehicleSpecifications = pgTable("vehicleSpecifications", {
   vehicleSpecId: serial("vehicleSpecId").primaryKey(),
@@ -53,9 +42,9 @@ export const vehicleSpecifications = pgTable("vehicleSpecifications", {
   features: text("features"),
 });
 
-// -----------------------------
+
 // Vehicles Table
-// -----------------------------
+
 
 export const vehicles = pgTable("vehicles", {
   vehicleId: serial("vehicleId").primaryKey(),
@@ -68,9 +57,9 @@ export const vehicles = pgTable("vehicles", {
   updatedAt: timestamp("updatedAt").defaultNow(),
 });
 
-// -----------------------------
+
 // Locations Table
-// -----------------------------
+
 
 export const locations = pgTable("locations", {
   locationId: serial("locationId").primaryKey(),
@@ -81,9 +70,9 @@ export const locations = pgTable("locations", {
   updatedAt: timestamp("updatedAt").defaultNow(),
 });
 
-// -----------------------------
+
 // Bookings Table
-// -----------------------------
+
 
 export const bookings = pgTable("bookings", {
   bookingId: serial("bookingId").primaryKey(),
@@ -98,9 +87,9 @@ export const bookings = pgTable("bookings", {
   updatedAt: timestamp("updatedAt").defaultNow(),
 });
 
-// -----------------------------
+
 // Payments Table
-// -----------------------------
+
 
 export const payments = pgTable("payments", {
   paymentId: serial("paymentId").primaryKey(),
@@ -116,9 +105,9 @@ export const payments = pgTable("payments", {
   updatedAt: timestamp("updatedAt").defaultNow(),
 });
 
-// -----------------------------
+
 // Support Tickets Table
-// -----------------------------
+
 
 export const supportTickets = pgTable("supporTickets", {
   ticketId: serial("ticketId").primaryKey(),
@@ -162,9 +151,9 @@ export type TPaymentSelect = typeof payments.$inferSelect;
 export type TSupportTicketInsert = typeof supportTickets.$inferInsert;
 export type TSupportTicketSelect = typeof supportTickets.$inferSelect;
 
-// -----------------------------
+
 // RELATIONS
-// -----------------------------
+
 
 export const usersRelations = relations(users, ({ many }) => ({
   bookings: many(bookings),

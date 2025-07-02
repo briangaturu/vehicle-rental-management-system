@@ -59,7 +59,7 @@ Content-Type: application/json
 
 //vehicles
 ###
-GET http://localhost:5000/api/vehicles
+GET http://localhost:5000/api/vehicles/12
 
 
 //create vehicles
@@ -71,7 +71,7 @@ content-type: application/json
 {
    "rentalRate": "50.00",
     "availability": "false",
-    "vehicleSpecId" :1
+    "vehicleSpecId" :7
 }
 //delete vehicleby id
 ###
@@ -84,9 +84,57 @@ PUT http://localhost:5000/api/vehicles/2
 content-type: application/json
 
 {
- "rentalRate": "50.00",
+ "rentalRate": "60.00",
     "availability": "false",
-    "vehicleSpecId" :1
+    "vehicleSpecId" :2
 }
 
 
+# Vehicle Specs
+###
+GET http://localhost:5000/api/vehicleSpecs
+
+###
+GET http://localhost:5000/api/vehicleSpecs-search?manufacturer=
+
+###
+GET http://localhost:5000/api/vehicleSpecs
+
+# creating a vehicle spec
+###
+POST  http://localhost:5000/api/vehicleSpecs
+Content-Type: application/json
+
+{
+    "manufacturer": "Lamborgini",
+    "model":"Urus",
+    "year":"2025",
+    "fuelType":"Diesel",
+    "engineCapacity":"6.0l",
+    "transmission":"Manual",
+    "seatingCapacity":"2",
+    "color":"Black-yellow",
+    "features":"Premium Interior, Navigation, Heated Seats, All-Wheel Drive, Brabus Modification,After Market Exhaust,Panaromic Sun Roof"
+    
+}
+
+###
+put  http://localhost:5000/api/vehicleSpecs/9
+Content-Type: application/json
+
+{
+    "manufacturer": "Lamborgini",
+    "model":"Urus",
+    "year":"2022",
+    "fuelType":"Diesel",
+    "engineCapacity":"6.0l",
+    "transmission":"Manual",
+    "seatingCapacity":"2",
+    "color":"Black-yellow",
+    "features":"Premium Interior, Navigation, Heated Seats, All-Wheel Drive, Brabus Modification,After Market Exhaust,Panaromic Sun Roof"
+    
+}
+
+
+###
+DELETE   http://localhost:5000/api/vehicleSpecs/10
