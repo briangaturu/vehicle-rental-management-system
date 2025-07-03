@@ -179,6 +179,9 @@ Content-Type: application/json
 ###
 DELETE   http://localhost:5000/api/location/1
 
+
+//.BOOKINGS
+
 //get all bookings
 ###
 GET http://localhost:5000/api/booking
@@ -220,3 +223,41 @@ Content-Type: application/json
 //delete a booking
 ###
 DELETE   http://localhost:5000/api/booking/6
+
+//TICKETS
+
+//get all tickets
+###
+GET http://localhost:5000/api/ticket
+
+//get ticket by id
+###
+GET http://localhost:5000/api/ticket/6
+
+//create a booking
+###
+POST http://localhost:5000/api/ticket
+Content-Type: application/json
+
+{
+    "subject": "perfomance issue",
+  "description": "the vehicle developed some mechanical problems please book another one",
+  "userId": 2
+  
+}
+
+//update a ticket
+###
+PUT http://localhost:5000/api/ticket/6
+Content-Type: application/json
+
+{
+    "subject": "availability issue",
+  "description": "the vehicle is not available at the moment",
+  "userId": 2
+  }
+
+
+//delete a ticket
+###
+DELETE   http://localhost:5000/api/ticket/6
