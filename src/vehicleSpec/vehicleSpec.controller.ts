@@ -95,12 +95,12 @@ export const updateVehicleSpec = async(req: Request, res: Response) =>{
         return;
     }
     try {
-            const createSpec = await updateVehicleSpecServices(vehicleSpecId,{manufacturer,model,year,fuelType,engineCapacity,transmission,seatingCapacity,color,features});
-            if(!createSpec){
-                res.status(404).json({error: "Failed to create vehicle Specs"});
+            const updateSpec = await updateVehicleSpecServices(vehicleSpecId,{manufacturer,model,year,fuelType,engineCapacity,transmission,seatingCapacity,color,features});
+            if(!updateSpec){
+                res.status(404).json({error: "Failed to update vehicle Specs"});
             }
             else{
-                res.status(200).json(createSpec);
+                res.status(200).json(updateSpec);
             }
     } catch (error:any) {
       res.status(500).json({error: error.message || "error occured Failed to update Vehicle Specs"})  
