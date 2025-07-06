@@ -7,6 +7,7 @@ import { VehicleSpecsRouter } from './vehicleSpec/vehicleSpec.route';
 import { locationRouter } from './location/location.route';
 import { bookingRouter } from './booking/booking.route';
 import { ticketRouter } from './supportTicket/supportTicket.route';
+import { paymentRouter } from './payment/payment.route';
 
 
 
@@ -33,6 +34,7 @@ app.use('/api', VehicleSpecsRouter)
 app.use('/api', locationRouter)
 app.use('/api',bookingRouter)
 app.use('/api',ticketRouter)
+app.use('/api',paymentRouter)
 
 const PORT = process.env.PORT || 5000;
 

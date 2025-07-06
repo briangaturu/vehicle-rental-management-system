@@ -8,9 +8,9 @@ POST http://localhost:5000/api/users
 content-type: application/json
 
 {
-    "firstname": "Brian",
-    "lastname": "Ireri",
-    "email": "briangaturu03@gmail.com",
+    "firstname": "eliud",
+    "lastname": "maina",
+    "email": "sultaneliud49@gmail.com",
     "password":"2103684",
     "contact":"+254796598257",
     "address":"123 Othaya,Nyeri",
@@ -59,7 +59,7 @@ Content-Type: application/json
 
 //vehicles
 ###
-GET http://localhost:5000/api/vehicles/12
+GET http://localhost:5000/api/vehicles/2
 
 
 //create vehicles
@@ -261,3 +261,38 @@ Content-Type: application/json
 //delete a ticket
 ###
 DELETE   http://localhost:5000/api/ticket/6
+
+//PAYMENTS
+//get all payments
+###
+GET http://localhost:5000/api/payments
+
+//get payment by id
+###
+GET http://localhost:5000/api/payments/2
+
+//create a payment
+###
+POST http://localhost:5000/api/payments
+content-type: application/json
+
+{
+    "amount": 100.00,
+    "paymentMethod": "Stripe",
+    "status": "Pending",
+    "bookingId": 2
+}
+//update a payment
+###
+PUT http://localhost:5000/api/payments/2
+content-type: application/json
+
+{
+    "amount": 120.00,
+    "paymentMethod": "Mpesa",
+    "status": "Paid",
+    "bookingId": 2
+} 
+//delete a payment
+###
+DELETE http://localhost:5000/api/payments/2
