@@ -1,17 +1,27 @@
-import {eq} from "drizzle-orm";
+import {desc, eq} from "drizzle-orm";
 import db from "../drizzle/db"
 import { TUserInsert, TUserSelect, users } from "../drizzle/schema";
 
 //Get all users
 export const getUsersService = async():Promise<TUserSelect[] | null > =>{
-return await db.query.users.findMany({});
+return await db.query.users.findMany({
+    with: {
+        bookings: true,
+        supportTickets: true,
+    },
+    orderBy: [desc(users.userId)]
+});
 
 }
 
 //Get users by Id
 export const getUserByIdServices = async(userId:number,):Promise<TUserSelect | undefined> =>{
     return await db.query.users.findFirst({
-        where: eq(users.userId,userId)
+        where: eq(users.userId,userId),
+         with: {
+        bookings: true,
+        supportTickets: true,
+    },
     })
 }
 

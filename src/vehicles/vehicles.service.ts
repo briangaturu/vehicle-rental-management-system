@@ -5,7 +5,11 @@ import { TVehicleInsert, TVehicleSelect, vehicles } from "../drizzle/schema";
 
 //Get all vehicles
 export const getVehiclesServices = async():Promise<TVehicleSelect[] | null >=>{
-return await db.query.vehicles.findMany({});
+return await db.query.vehicles.findMany({
+    with: {
+        vehicleSpec: true,
+    }
+});
 }
 
 //GET VEHICLE BY ID

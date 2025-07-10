@@ -27,7 +27,18 @@ export const getPaymentByIdService = async (
   return await db.query.payments.findFirst({
     where: eq(payments.paymentId, paymentId),
     with: {
-      booking: true,
+      booking:{
+        columns: {
+          vehicleId: true,
+          userId: true,
+          bookingId: true,
+          bookingDate: true,
+          returnDate: true,
+          bookingStatus: true,
+          totalAmount: true,
+          
+        }
+      },
     },
   });
 };

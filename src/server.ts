@@ -8,6 +8,7 @@ import { locationRouter } from './location/location.route';
 import { bookingRouter } from './booking/booking.route';
 import { ticketRouter } from './supportTicket/supportTicket.route';
 import { paymentRouter } from './payment/payment.route';
+import cors from 'cors';
 
 
 
@@ -18,6 +19,7 @@ const app: Application = express();
 // Basic Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors())
 
 
 
@@ -44,6 +46,7 @@ app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
  });
   
+
 
 
 

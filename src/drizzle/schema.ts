@@ -13,7 +13,7 @@ export const paymentMethodEnum = pgEnum("paymentMethod", ["Stripe", "Mpesa"]);
 
 
 export const users = pgTable("users", {
-  userId: serial("userId").primaryKey(),
+  userId: integer("userId").primaryKey(),
   firstname: varchar("firstname", { length: 255 }).notNull(),
   lastname: varchar("lastname", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull().unique(),

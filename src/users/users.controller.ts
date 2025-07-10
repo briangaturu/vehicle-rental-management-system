@@ -33,13 +33,13 @@ export const getUserById = async (req: Request, res: Response) => {
 }
 
 export const createUser = async (req: Request, res: Response) => {
-    const { firstname,lastname, email, password } = req.body;
-    if (!firstname || !lastname || !email || !password) {
+    const { firstname,lastname, email, password,userId,contact,address } = req.body;
+    if (!firstname || !lastname || !email || !password || !userId || !contact || !address) {
         res.status(400).json({ error: "All fields are required" });
         return; // Prevent further execution
     }
     try {
-        const newUser = await createUserServices({ firstname,lastname, email, password });
+        const newUser = await createUserServices({ firstname,lastname, email, password,userId, contact,address });
         if (newUser == null) {
             res.status(500).json({ message: "Failed to create user" });
         } else {
@@ -51,18 +51,18 @@ export const createUser = async (req: Request, res: Response) => {
 }
 
 export const updateUser = async (req: Request, res: Response) => {
-    const userId = parseInt(req.params.id);
-    if (isNaN(userId)) {
+    const usersId = parseInt(req.params.id);
+    if (isNaN(usersId)) {
         res.status(400).json({ error: "Invalid user ID" });
         return; // Prevent further execution
     }
-    const { firstname,lastname, email, password } = req.body;
-    if (!firstname || !lastname || !email || !password) {
+    const { firstname,lastname, email, password,userId,contact,address} = req.body;
+    if (!firstname || !lastname || !email || !password || !userId || !contact || !address) {
         res.status(400).json({ error: "All fields are required" });
         return; // Prevent further execution
     }
     try {
-        const updatedUser = await updateUserServices(userId, { firstname,lastname, email, password });
+        const updatedUser = await updateUserServices(userId, { firstname,lastname, email, password,contact,address });
         if (updatedUser == null) {
             res.status(404).json({ message: "User not found or failed to update" });
         } else {

@@ -295,4 +295,13 @@ content-type: application/json
 } 
 //delete a payment
 ###
-DELETE http://localhost:5000/api/payments/2
+DELETE 
+
+//get payments by bookingId
+###
+GET http://localhost:5000/api/payments/booking/2
+
+//search payments by status
+###
+GET http://localhost:5000/api/payments-status-search?status=Paid
+
