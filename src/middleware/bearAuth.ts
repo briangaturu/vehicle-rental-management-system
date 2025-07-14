@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
+import { roleEnum } from '../drizzle/schema';
 
 declare global {
   namespace Express {
@@ -13,7 +14,7 @@ declare global {
 type DecodedToken = {
     userId: string;
     email: string;
-    userType: string;
+    role: string;
     exp?: number;
 };
 
@@ -42,16 +43,16 @@ export const authMiddleware  = async(req: Request, res: Response, next: NextFunc
         res.status(401).json({ error: "Invalid or expired token" });
         return;
     }   
-    const userType = decodedToken?.userType;
+    const role = decodedToken?.role;
     // console.log("🚀 ~ authMiddleware ~ decodedToken:", decodedToken)
    
-        if (requiredRole === "both" && (userType === "admin" || userType === "member")) {
-            if (decodedToken.userType === "admin" || decodedToken.userType === "member") {
+        if (requiredRole === "both" && (role === "admin" || role === "user")) {
+            if (decodedToken.role === "admin" || decodedToken.role === "user") {
                 req.user = decodedToken;
                 next();
                 return;
             }
-        } else if (userType === requiredRole) {
+        } else if (role === requiredRole) {
             req.user = decodedToken;
             next();
             return;
@@ -65,5 +66,5 @@ export const authMiddleware  = async(req: Request, res: Response, next: NextFunc
 
 // Middleware to check if the user is an admin
 export const adminRoleAuth  = async(req: Request, res: Response, next: NextFunction) => await authMiddleware(req, res, next, "admin");
-export const userRoleAuth  = async(req: Request, res: Response, next: NextFunction) => await authMiddleware(req, res, next, "member");
+export const userRoleAuth  = async(req: Request, res: Response, next: NextFunction) => await authMiddleware(req, res, next, "user");
 export const bothRolesAuth = async(req: Request, res: Response, next: NextFunction) => await authMiddleware(req, res, next, "both");

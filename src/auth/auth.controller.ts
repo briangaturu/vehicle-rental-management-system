@@ -77,15 +77,16 @@ export const loginUser = async (req: Request, res: Response) => {
         let payload ={
             userId: user.userId,
             email: user.email,
-            userType: user.role,
+            role: user.role,
             //expiresIn: "1h" // Optional: Set token expiration
             exp: Math.floor(Date.now() / 1000) + (60 * 60) // Token expires in 1 hour
         }
+        
 
         let secret = process.env.JWT_SECRET as string;
         const token = jwt.sign(payload, secret);
 
-        res.status(200).json({ token, userId: user.userId, email: user.email, userType: user.role });
+        res.status(200).json({ token, userId: user.userId, email: user.email, role: user.role });
     } catch (error:any) {
         res.status(500).json({ error:error.message || "Failed to login user" });
     }
