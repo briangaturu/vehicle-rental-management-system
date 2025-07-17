@@ -50,44 +50,52 @@ export const createUser = async (req: Request, res: Response) => {
 
 //Login User
 export const loginUser = async (req: Request, res: Response) => {
-    try {
-        const parseResult = UserLoginValidator.safeParse(req.body);
-        if (!parseResult.success) {
-            res.status(400).json({ error: parseResult.error.issues });
-            return;
-        }
-        const { email, password } = parseResult.data;
-
-        // Check if user exists
-        const user = await getUserByEmailService(email);
-        // console.log("🚀 ~ loginUser ~ user:", user)
-        if (!user) {
-            res.status(404).json({ error: "User not found" });
-            return;
-        }
-
-        // Compare passwords
-        const isMatch = bcrypt.compareSync(password, user.password);
-        if (!isMatch) {
-             res.status(401).json({ error: "Invalid password" });
-             return;
-        }
-
-        //Generate a token
-        let payload ={
-            userId: user.userId,
-            email: user.email,
-            role: user.role,
-            //expiresIn: "1h" // Optional: Set token expiration
-            exp: Math.floor(Date.now() / 1000) + (60 * 60) // Token expires in 1 hour
-        }
-        
-
-        let secret = process.env.JWT_SECRET as string;
-        const token = jwt.sign(payload, secret);
-
-        res.status(200).json({ token, userId: user.userId, email: user.email, role: user.role });
-    } catch (error:any) {
-        res.status(500).json({ error:error.message || "Failed to login user" });
+  try {
+    const parseResult = UserLoginValidator.safeParse(req.body);
+    if (!parseResult.success) {
+      res.status(400).json({ error: parseResult.error.issues });
+      return;
     }
-}
+    const { email, password } = parseResult.data;
+
+    // Check if user exists
+    const user = await getUserByEmailService(email);
+    if (!user) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    // Compare passwords
+    const isMatch = bcrypt.compareSync(password, user.password);
+    if (!isMatch) {
+      res.status(401).json({ error: "Invalid password" });
+      return;
+    }
+
+    // Generate token
+    let payload = {
+      userId: user.userId,
+      email: user.email,
+      role: user.role,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60,
+    };
+
+    let secret = process.env.JWT_SECRET as string;
+    const token = jwt.sign(payload, secret);
+    console.log(payload)
+
+    res.status(200).json({
+      token,
+      user: {
+        id: user.userId,
+        email: user.email,
+        role: user.role,
+      },
+      role: user.role,
+    });
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ error: error.message || "Failed to login user" });
+  }
+};

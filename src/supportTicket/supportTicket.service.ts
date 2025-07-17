@@ -28,6 +28,24 @@ export const getTicketByIdService = async(supportTicketId: number): Promise<TSup
     })
 }
 
+//get tickets by userid
+export const getTicketByUserIdService = async(userId: number): Promise<TSupportTicketSelect[]> => {
+    return await db.query.supportTickets.findMany({
+        where: eq(supportTickets.userId, userId),
+        with: {
+            user:{columns: {
+                userId: true,
+                firstname: true,
+                lastname: true,
+                email: true,
+                contact: true,
+            }}
+            
+        },
+        orderBy: [desc(supportTickets.ticketId)]
+    });
+}
+
 // cREATING TICKET
 export const createTicketServices = async(ticket: TSupportTicketInsert):Promise<string> =>{
     await db.insert(supportTickets).values(ticket).returning();

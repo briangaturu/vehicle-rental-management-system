@@ -1,5 +1,5 @@
 import Router from "express"
-import { createBooking, deleteBookingById, getAllBookings, getBookingById, updateBooking } from "./booking.contoller";
+import { createBooking, deleteBookingById, getAllBookings, getBookingById, getBookingByUserId, updateBooking } from "./booking.contoller";
 
 
 
@@ -11,6 +11,9 @@ bookingRouter.get('/booking',getAllBookings);
 
 //get booking by id
 bookingRouter.get('/booking/:id',getBookingById);
+
+//get booking by user id
+bookingRouter.get('/booking/user/:id',getBookingByUserId);
 
 
 //search booking by date

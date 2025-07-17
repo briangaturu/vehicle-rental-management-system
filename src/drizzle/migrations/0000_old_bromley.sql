@@ -28,6 +28,7 @@ CREATE TABLE "locations" (
 --> statement-breakpoint
 CREATE TABLE "payments" (
 	"paymentId" serial PRIMARY KEY NOT NULL,
+	"userId" integer NOT NULL,
 	"bookingId" integer NOT NULL,
 	"amount" numeric(10, 2) NOT NULL,
 	"paymentStatus" "paymentStatus" DEFAULT 'Pending' NOT NULL,
@@ -49,7 +50,7 @@ CREATE TABLE "supporTickets" (
 );
 --> statement-breakpoint
 CREATE TABLE "users" (
-	"userId" serial PRIMARY KEY NOT NULL,
+	"userId" integer PRIMARY KEY NOT NULL,
 	"firstname" varchar(255) NOT NULL,
 	"lastname" varchar(255) NOT NULL,
 	"email" varchar(255) NOT NULL,
@@ -87,6 +88,7 @@ CREATE TABLE "vehicles" (
 ALTER TABLE "bookings" ADD CONSTRAINT "bookings_userId_users_userId_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("userId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "bookings" ADD CONSTRAINT "bookings_vehicleId_vehicles_vehicleId_fk" FOREIGN KEY ("vehicleId") REFERENCES "public"."vehicles"("vehicleId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "bookings" ADD CONSTRAINT "bookings_locationId_locations_locationId_fk" FOREIGN KEY ("locationId") REFERENCES "public"."locations"("locationId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "payments" ADD CONSTRAINT "payments_userId_users_userId_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("userId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "payments" ADD CONSTRAINT "payments_bookingId_bookings_bookingId_fk" FOREIGN KEY ("bookingId") REFERENCES "public"."bookings"("bookingId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "supporTickets" ADD CONSTRAINT "supporTickets_userId_users_userId_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("userId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "vehicles" ADD CONSTRAINT "vehicles_vehicleSpecId_vehicleSpecifications_vehicleSpecId_fk" FOREIGN KEY ("vehicleSpecId") REFERENCES "public"."vehicleSpecifications"("vehicleSpecId") ON DELETE cascade ON UPDATE no action;

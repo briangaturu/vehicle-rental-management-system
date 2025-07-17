@@ -69,6 +69,17 @@ export const getPaymentsByStatusService = async (
   });
 };
 
+//get payments by userid
+export const getPaymentByUserIdService = async(userId: number): Promise<TPaymentSelect[]>=>{
+    return await db.query.payments.findMany({
+        where: eq(payments.userId, userId),
+        with: {
+            booking: true,
+        },
+        orderBy: [desc(payments.paymentDate)]
+    });
+}
+
 // Create a new payment
 export const createPaymentService = async (
   payment: TPaymentInsert

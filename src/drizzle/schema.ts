@@ -93,6 +93,7 @@ export const bookings = pgTable("bookings", {
 
 export const payments = pgTable("payments", {
   paymentId: serial("paymentId").primaryKey(),
+  userId: integer("userId").notNull().references(() => users.userId, { onDelete: "cascade" }),
   bookingId: integer("bookingId")
     .notNull()
     .references(() => bookings.bookingId, { onDelete: "cascade" }),

@@ -79,6 +79,26 @@ export const getBookingByIdService = async(bookingId: number): Promise<TBookingS
     })
 }
 
+//get bookings by user id
+export const getBookingByUserIdService = async(userId: number): Promise<TBookingSelect[]>=>{
+    return await db.query.bookings.findMany({
+        where: eq(bookings.userId, userId),
+         with:{
+           user:true,
+              vehicle: {
+                 with: {
+                vehicleSpec: true
+                 }
+              }, 
+               location: true,
+        payments: true,
+        },
+       
+        orderBy: [desc(bookings.bookingId)]
+    
+    });
+}
+
 // cREATING BOOKINGS
 export const createBookingServices = async(booking: TBookingInsert):Promise<string> =>{
     await db.insert(bookings).values(booking).returning();

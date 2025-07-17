@@ -1,7 +1,7 @@
 import { z } from "zod/v4";
 
 export const UserValidator = z.object({
-  userId: z.number().min(8).max(10),
+  userId: z.number(),
   email: z.email().trim(),
   firstname: z.string().min(5).max(100).trim(),
   lastname: z.string().min(5).max(100).trim(),

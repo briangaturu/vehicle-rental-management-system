@@ -10,6 +10,7 @@ import {
   createPayment,
   updatePayment,
   deletePayment,
+  getPaymentByUserId,
 } from "./payment.controller"; 
 
 export const paymentRouter = Router();
@@ -26,6 +27,9 @@ paymentRouter.get("/payments/:id", getPaymentById);
 
 // Get payments by Booking ID
 paymentRouter.get("/payments/booking/:bookingId", getPaymentsByBookingId);
+
+//get payment by user id
+paymentRouter.get("/payments/user/:id", getPaymentByUserId);
 
 // Create a new payment
 paymentRouter.post("/payments", createPayment);

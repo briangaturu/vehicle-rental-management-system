@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import { createTicketServices, deleteTicketService, GetAllTicketService, getTicketByIdService, updateTicketServices } from "./supportTicket.service";
+import { createTicketServices, deleteTicketService, GetAllTicketService, getTicketByIdService, getTicketByUserIdService, updateTicketServices } from "./supportTicket.service";
 
 
 //get all tickets
@@ -26,6 +26,26 @@ if(isNaN(ticketId)){
 }
 try {
    const ticket = await getTicketByIdService(ticketId);
+    if(!ticket){
+            res.status(404).json({error: "No ticket Found"})
+        }
+        else{
+            res.status(200).json(ticket);
+        }
+} catch (error:any) {
+    res.status(500).json({error: error.message || "error occured Failed to fetch tickets"})
+}
+}
+
+//get tickets by user id
+export const getTicketByUserId = async(req:Request, res:Response)=>{
+const userId = parseInt(req.params.id);
+if(isNaN(userId)){
+    res.status(400).json({error:"invalid user id"})
+    return;
+}
+try {
+   const ticket = await getTicketByUserIdService(userId);
     if(!ticket){
             res.status(404).json({error: "No ticket Found"})
         }
@@ -125,6 +145,3 @@ export const updateTicket = async(req:Request,res:Response)=>{
            res.status(500).json({error: error.message || "error occured Failed to delete ticket"})
        }
    }
-    
-
-

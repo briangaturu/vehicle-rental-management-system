@@ -18,7 +18,7 @@ export const getUserById = async (req: Request, res: Response) => {
     const userId = parseInt(req.params.id);
     if (isNaN(userId)) {
         res.status(400).json({ error: "Invalid user ID" });
-         return; // Prevent further execution
+         return; 
     }
     try {
         const user = await getUserByIdServices(userId);
@@ -36,7 +36,7 @@ export const createUser = async (req: Request, res: Response) => {
     const { firstname,lastname, email, password,userId,contact,address } = req.body;
     if (!firstname || !lastname || !email || !password || !userId || !contact || !address) {
         res.status(400).json({ error: "All fields are required" });
-        return; // Prevent further execution
+        return; 
     }
     try {
         const newUser = await createUserServices({ firstname,lastname, email, password,userId, contact,address });
@@ -54,12 +54,12 @@ export const updateUser = async (req: Request, res: Response) => {
     const usersId = parseInt(req.params.id);
     if (isNaN(usersId)) {
         res.status(400).json({ error: "Invalid user ID" });
-        return; // Prevent further execution
+        return; 
     }
     const { firstname,lastname, email, password,userId,contact,address} = req.body;
     if (!firstname || !lastname || !email || !password || !userId || !contact || !address) {
         res.status(400).json({ error: "All fields are required" });
-        return; // Prevent further execution
+        return; 
     }
     try {
         const updatedUser = await updateUserServices(userId, { firstname,lastname, email, password,contact,address });
@@ -77,7 +77,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     const userId = parseInt(req.params.id);  
     if (isNaN(userId)) {
         res.status(400).json({ error: "Invalid user ID" });
-        return; // Prevent further execution
+        return; 
     }
     try {
         const deletedUser = await deleteUserServices(userId);

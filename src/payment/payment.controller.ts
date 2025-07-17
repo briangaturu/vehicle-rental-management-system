@@ -9,6 +9,7 @@ import {
   createPaymentService,
   updatePaymentService,
   deletePaymentService,
+  getPaymentByUserIdService,
 } from "./payment.service";
 
 // Get all payments
@@ -92,6 +93,25 @@ export const getPaymentsByStatus = async (req: Request, res: Response) => {
   }
 };
 
+//get payment by userid
+export const getPaymentByUserId = async (req: Request, res: Response) => {
+  const userId = parseInt(req.params.id);
+  if (isNaN(userId)) {
+    res.status(400).json({ error: "🚫 Invalid user ID" });
+    return;
+  }
+  try {
+    const payments = await getPaymentByUserIdService(userId);
+    if (!payments || payments.length === 0) {
+      res.status(404).json({ message: `🔍 No payments found for user ID ${userId}` });
+    } else {
+      res.status(200).json(payments);
+    }
+  } catch (error: any) {
+    res.status(500).json({ error: "🚫 " + (error.message || `Failed to retrieve payments for user ID ${userId}`) });
+  }
+}
+
 
 // Create new payment
 export const createPayment = async (req: Request, res: Response) => {
@@ -113,6 +133,7 @@ export const createPayment = async (req: Request, res: Response) => {
   try {
     const newPayment = {
       bookingId: parsedBookingId,
+      userId: req.body.userid,
       amount: parsedAmount.toString(),
       paymentStatus: paymentStatus || "Pending",
       paymentMethod: paymentMethod || null,

@@ -1,5 +1,5 @@
 import Router from "express"
-import { createTicket, deleteTicketById, getAllTickets, getTicketById, updateTicket } from "./supportTicket.controller";
+import { createTicket, deleteTicketById, getAllTickets, getTicketById, getTicketByUserId, updateTicket } from "./supportTicket.controller";
 
 
 
@@ -11,6 +11,9 @@ ticketRouter.get('/ticket',getAllTickets);
 
 //get ticket by id
 ticketRouter.get('/ticket/:id',getTicketById);
+
+//get ticket by user id
+ticketRouter.get('/ticket/user/:id',getTicketByUserId);
 
 
 //search booking by date

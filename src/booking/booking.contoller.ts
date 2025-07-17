@@ -1,5 +1,5 @@
 import {Request,Response} from "express";
-import { createBookingServices, deleteBookingService, GetAllBookingService, getBookingByIdService, updateBookingServices } from "./booking.service";
+import { createBookingServices, deleteBookingService, GetAllBookingService, getBookingByIdService, getBookingByUserIdService, updateBookingServices } from "./booking.service";
 
 
 
@@ -37,6 +37,26 @@ try {
      res.status(500).json({error: error.message || "error occured Failed to fetch booking"})
 }
 }
+
+//get bookings by user id
+export const getBookingByUserId = async(req:Request,res:Response)=>{
+    const userId = parseInt(req.params.id);
+    if(isNaN(userId)){
+        res.status(400).json({error:"invalid user id"})
+        return;
+    }
+    try {
+        const bookingByUserId = await getBookingByUserIdService(userId);
+        if(!bookingByUserId){
+            res.status(404).json({error:"no booking found"})
+        }else{
+            res.status(200).json(bookingByUserId)
+        }
+    } catch (error:any) {
+         res.status(500).json({error: error.message || "error occured Failed to fetch booking"})
+    }
+    }
+
 
 //creating a booking
 export const createBooking = async(req: Request, res: Response)=>{
