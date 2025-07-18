@@ -1,7 +1,7 @@
 // default route
 
 ###
-GET http://localhost:5000/api/users/12121212
+GET http://localhost:5000/api/users
 
 ###
 POST http://localhost:5000/api/users
@@ -69,10 +69,24 @@ POST http://localhost:5000/api/vehicles
 content-type: application/json
 
 {
-   "rentalRate": "50.00",
-    "availability": "false",
-    "vehicleSpecId" :1
+  "rentalRate": 1000,
+  "availability": "Available",
+  "vehicleSpec": {
+    "brand": "Subaru",
+    "model": "WRX STI",
+    "manufacturer": "Subaru Corporation",
+    "color": "Blue",
+    "year": 2022,
+    "fuelType": "Petrol",
+    "engineCapacity": 2000,
+    "seatingCapacity": 5,
+    "transmission": "Manual",
+    "features": "Turbocharged, AWD"
+  }
 }
+
+
+
 //delete vehicleby id
 ###
 DELETE http://localhost:5000/api/vehicles/1
@@ -159,7 +173,7 @@ POST http://localhost:5000/api/location
 Content-Type: application/json
 
 {
-    "name": "Nyeri Branch",
+    "name": "Nyeri",
   "address": "Kimathi Street, Nyeri",
   "contact": "+254723456789"
 }
@@ -170,7 +184,7 @@ PUT  http://localhost:5000/api/location/2
 Content-Type: application/json
 
 {
-     "name":"kisumu branch",
+     "name":"kisumu ",
     "address":"Oginga  Street, Kisumu",
     "contact":"+254723456789"
 }
@@ -200,9 +214,9 @@ POST http://localhost:5000/api/booking
 Content-Type: application/json
 
 {
-    "userId": 3,
+    "userId": 11111111,
     "vehicleId": 2,
-    "locationId": 4,
+    "locationId": 2,
     "bookingDate": "2025-06-23",
   "returnDate": "2025-06-30",
   "totalAmount": 400.00
