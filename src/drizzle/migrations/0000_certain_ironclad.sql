@@ -81,6 +81,7 @@ CREATE TABLE "vehicles" (
 	"vehicleSpecId" integer NOT NULL,
 	"rentalRate" numeric(10, 2) NOT NULL,
 	"availability" boolean DEFAULT true,
+	"imageUrl" varchar(255),
 	"createdAt" timestamp DEFAULT now(),
 	"updatedAt" timestamp DEFAULT now()
 );

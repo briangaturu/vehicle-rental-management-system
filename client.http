@@ -53,8 +53,8 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "michael@example.com",
-    "password": "password3" 
+  "email": "james03@gmail.com",
+    "password": "12345678" 
 }
 
 //vehicles
@@ -69,21 +69,12 @@ POST http://localhost:5000/api/vehicles
 content-type: application/json
 
 {
-  "rentalRate": 1000,
-  "availability": "Available",
-  "vehicleSpec": {
-    "brand": "Subaru",
-    "model": "WRX STI",
-    "manufacturer": "Subaru Corporation",
-    "color": "Blue",
-    "year": 2022,
-    "fuelType": "Petrol",
-    "engineCapacity": 2000,
-    "seatingCapacity": 5,
-    "transmission": "Manual",
-    "features": "Turbocharged, AWD"
-  }
+  "rentalRate": "1000.00",
+  "availability": true,
+  "imageUrl": "https://example.com/images/subaru.jpg",
+  "vehicleSpecId": 1 
 }
+
 
 
 
@@ -94,7 +85,7 @@ DELETE http://localhost:5000/api/vehicles/1
 //update vehicles
 
 ###
-PUT http://localhost:5000/api/vehicles/2
+PUT http://localhost:5000/api/vehicles/1
 content-type: application/json
 
 {

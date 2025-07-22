@@ -51,28 +51,36 @@ export const createUser = async (req: Request, res: Response) => {
 }
 
 export const updateUser = async (req: Request, res: Response) => {
-    const usersId = parseInt(req.params.id);
+    const usersId = parseInt(req.params.id); // This is the ID from the URL, which is the user to update
     if (isNaN(usersId)) {
         res.status(400).json({ error: "Invalid user ID" });
-        return; 
+        return;
     }
-    const { firstname,lastname, email, password,userId,contact,address} = req.body;
-    if (!firstname || !lastname || !email || !password || !userId || !contact || !address) {
+    // Destructure fields from req.body. We no longer need userId from body here
+    const { firstname, lastname, email, password, contact, address } = req.body;
+
+    // Your existing validation: All fields are required. Keep this as per your instruction.
+    // Note: For a PUT (update) operation, usually not all fields are strictly required,
+    // but I'm keeping your original validation logic here as per your request.
+    if (!firstname || !lastname || !email || !password || !contact || !address) {
         res.status(400).json({ error: "All fields are required" });
-        return; 
+        return;
     }
+
     try {
-        const updatedUser = await updateUserServices(userId, { firstname,lastname, email, password,contact,address });
+        // CORRECTED LINE: Pass usersId (from req.params.id) to updateUserServices
+        // The payload for updateUserServices should contain the fields to update.
+        const updatedUser = await updateUserServices(usersId, { firstname, lastname, email, password, contact, address });
         if (updatedUser == null) {
+            // Service might return null if user not found or update failed (depending on its implementation)
             res.status(404).json({ message: "User not found or failed to update" });
         } else {
-            res.status(200).json(updatedUser);
+            res.status(200).json(updatedUser); // Return the updated user object
         }
     } catch (error:any) {
         res.status(500).json({ error:error.message || "Failed to update user" });
     }
 }
-
 export const deleteUser = async (req: Request, res: Response) => {
     const userId = parseInt(req.params.id);  
     if (isNaN(userId)) {
