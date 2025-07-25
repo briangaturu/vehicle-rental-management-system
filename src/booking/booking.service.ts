@@ -100,9 +100,9 @@ export const getBookingByUserIdService = async(userId: number): Promise<TBooking
 }
 
 // cREATING BOOKINGS
-export const createBookingServices = async(booking: TBookingInsert):Promise<string> =>{
-    await db.insert(bookings).values(booking).returning();
-    return "Booking Created SucccessFully"
+export const createBookingServices = async(booking: TBookingInsert):Promise<TBookingSelect> =>{
+ const [newBooking] =   await db.insert(bookings).values(booking).returning();
+    return newBooking;
 }
 
 // Updating SpecS

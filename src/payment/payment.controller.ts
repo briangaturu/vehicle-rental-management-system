@@ -11,6 +11,12 @@ import {
   deletePaymentService,
   getPaymentByUserIdService,
 } from "./payment.service";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2025-06-30.basil',
+});
+
 
 // Get all payments
 export const getAllPayments = async (req: Request, res: Response) => {
@@ -200,5 +206,44 @@ export const deletePayment = async (req: Request, res: Response) => {
     res.status(200).json({ message: "🗑️ " + result });
   } catch (error: any) {
     res.status(500).json({ error: "🚫 " + (error.message || "Failed to delete payment") });
+  }
+};
+export const createCheckoutSession = async (req: Request, res: Response) => {
+  const { amount, bookingId, userId } = req.body;
+
+  if (!amount || isNaN(amount)) {
+    res.status(400).json({ error: 'Invalid input' });
+    return;
+  }
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            unit_amount: amount,
+            product_data: {
+              name: 'vehicle Payment',
+              description: 'vehicle booking payment',
+            },
+          },
+          quantity: 1,
+        },
+      ],
+      metadata: {
+        bookingId: bookingId ? String(bookingId) : '',
+        userId: userId ? String(userId) : '',
+      },
+      success_url: 'http://localhost:5173/user',
+      cancel_url: 'http://localhost:5173/user',
+    });
+
+    res.status(200).json({ url: session.url });
+  } catch (err: any) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to create checkout session' });
   }
 };

@@ -11,7 +11,9 @@ import {
   updatePayment,
   deletePayment,
   getPaymentByUserId,
+  createCheckoutSession,
 } from "./payment.controller"; 
+import { webhookHandler } from "./payment.webhook";
 
 export const paymentRouter = Router();
 
@@ -39,3 +41,7 @@ paymentRouter.put("/payments/:id", updatePayment);
 
 // Delete an existing payment
 paymentRouter.delete("/payments/:id", deletePayment);
+
+paymentRouter.post("/payments/checkout-session", createCheckoutSession);
+
+paymentRouter.post("/webhook", webhookHandler);

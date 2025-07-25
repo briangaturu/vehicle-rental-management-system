@@ -9,12 +9,15 @@ import { bookingRouter } from './booking/booking.route';
 import { ticketRouter } from './supportTicket/supportTicket.route';
 import { paymentRouter } from './payment/payment.route';
 import cors from 'cors';
+import { webhookHandler } from './payment/payment.webhook';
 
 
 
 dotenv.config();
 
 const app: Application = express();
+
+app.post("/api/webhook", express.raw({ type: 'application/json' }), webhookHandler);
 
 // Basic Middleware
 app.use(express.json());

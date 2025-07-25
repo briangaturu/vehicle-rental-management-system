@@ -77,6 +77,10 @@ export const loginUser = async (req: Request, res: Response) => {
       userId: user.userId,
       email: user.email,
       role: user.role,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      address: user.address,
+      contact: user.contact,
       exp: Math.floor(Date.now() / 1000) + 60 * 60,
     };
 
