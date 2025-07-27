@@ -39,9 +39,21 @@ export const createUser = async (req: Request, res: Response) => {
 
         // Call the service to create the user
         const newUser = await createUserServices(user);
-        const result = await sendNotificationEmail(user.email,user.firstname,user.lastname, "Acount Created Successfully 🌟","Welcome to our Food Services")
+        let emailResult;
+        try {
+          emailResult = await sendNotificationEmail(
+            user.email,
+            user.firstname,
+            user.lastname,
+            "Account Created Successfully 🌟",
+            `Welcome to RideXpress, ${user.firstname}! Your account has been created successfully.`
+          );
+        } catch (emailErr) {
+          console.warn("User created, but failed to send welcome email:", emailErr);
+          emailResult = "Failed to send welcome email";
+        }
 
-        res.status(201).json({message:newUser,emailNofication:result});    
+        res.status(201).json({ message: newUser, emailNotification: emailResult });
 
     } catch (error:any) {
         res.status(500).json({ error:error.message || "Failed to create user" });

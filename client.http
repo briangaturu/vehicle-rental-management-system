@@ -322,3 +322,38 @@ GET http://localhost:5000/api/payments/booking/2
 ###
 GET http://localhost:5000/api/payments-status-search?status=Paid
 
+### 
+GET http://localhost:3000/api/booking/debug/vehicle/1
+
+### Check Vehicle Availability
+POST http://localhost:3000/api/booking/check-availability
+Content-Type: application/json
+
+{
+  "vehicleId": 1,
+  "bookingDate": "2024-01-15",
+  "returnDate": "2024-01-20"
+}
+
+### Get Available Vehicles for Date Range
+POST http://localhost:3000/api/booking/available-vehicles
+Content-Type: application/json
+
+{
+  "bookingDate": "2024-01-15",
+  "returnDate": "2024-01-20"
+}
+
+### Create Booking (with availability check)
+POST http://localhost:3000/api/booking
+Content-Type: application/json
+
+{
+  "bookingDate": "2024-01-15",
+  "returnDate": "2024-01-20",
+  "totalAmount": 500.00,
+  "vehicleId": 1,
+  "locationId": 1,
+  "userId": 1
+} 
+

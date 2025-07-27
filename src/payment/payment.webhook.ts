@@ -60,10 +60,10 @@ export const webhookHandler = async (req: Request, res: Response) => {
       if (paymentStatus === "Paid") {
         await db
           .update(bookings)
-          .set({ bookingStatus: "Completed" })
+          .set({ bookingStatus: "Confirmed" })
           .where(eq(bookings.bookingId, Number(bookingId)));
 
-        console.log(`✅ Booking ${bookingId} marked as Completed`);
+        console.log(`✅ Booking ${bookingId} marked as Confirmed`);
       }
 
     } catch (err) {

@@ -1,5 +1,5 @@
 import Router from "express"
-import { createBooking, deleteBookingById, getAllBookings, getBookingById, getBookingByUserId, updateBooking } from "./booking.contoller";
+import { createBooking, deleteBookingById, getAllBookings, getBookingById, getBookingByUserId, updateBooking, checkVehicleAvailability, getAvailableVehicles, debugVehicleBookings } from "./booking.contoller";
 
 
 
@@ -27,3 +27,12 @@ bookingRouter.put('/booking/:id',updateBooking);
 
 //delete booking
 bookingRouter.delete('/booking/:id',deleteBookingById);
+
+// Check vehicle availability for a date range
+bookingRouter.post('/booking/check-availability', checkVehicleAvailability);
+
+// Get all available vehicles for a date range
+bookingRouter.post('/booking/available-vehicles', getAvailableVehicles);
+
+// Debug endpoint to check all bookings for a vehicle
+bookingRouter.get('/booking/debug/vehicle/:vehicleId', debugVehicleBookings);
