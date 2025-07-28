@@ -30,8 +30,15 @@ const createUser = async (req, res) => {
         user.password = hashedPassword;
         // Call the service to create the user
         const newUser = await (0, auth_service_1.createUserServices)(user);
-        const result = await (0, googlemailer_1.sendNotificationEmail)(user.email, user.firstname, user.lastname, "Acount Created Successfully 🌟", "Welcome to our Food Services");
-        res.status(201).json({ message: newUser, emailNofication: result });
+        let emailResult;
+        try {
+            emailResult = await (0, googlemailer_1.sendNotificationEmail)(user.email, user.firstname, user.lastname, "Account Created Successfully 🌟", `Welcome to RideXpress, ${user.firstname}! Your account has been created successfully.`);
+        }
+        catch (emailErr) {
+            console.warn("User created, but failed to send welcome email:", emailErr);
+            emailResult = "Failed to send welcome email";
+        }
+        res.status(201).json({ message: newUser, emailNotification: emailResult });
     }
     catch (error) {
         res.status(500).json({ error: error.message || "Failed to create user" });

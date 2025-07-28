@@ -54,9 +54,9 @@ const webhookHandler = async (req, res) => {
             if (paymentStatus === "Paid") {
                 await db_1.default
                     .update(schema_1.bookings)
-                    .set({ bookingStatus: "Completed" })
+                    .set({ bookingStatus: "Confirmed" })
                     .where((0, drizzle_orm_1.eq)(schema_1.bookings.bookingId, Number(bookingId)));
-                console.log(`✅ Booking ${bookingId} marked as Completed`);
+                console.log(`✅ Booking ${bookingId} marked as Confirmed`);
             }
         }
         catch (err) {

@@ -21,3 +21,9 @@ exports.bookingRouter.post('/booking', booking_contoller_1.createBooking);
 exports.bookingRouter.put('/booking/:id', booking_contoller_1.updateBooking);
 //delete booking
 exports.bookingRouter.delete('/booking/:id', booking_contoller_1.deleteBookingById);
+// Check vehicle availability for a date range
+exports.bookingRouter.post('/booking/check-availability', booking_contoller_1.checkVehicleAvailability);
+// Get all available vehicles for a date range
+exports.bookingRouter.post('/booking/available-vehicles', booking_contoller_1.getAvailableVehicles);
+// Debug endpoint to check all bookings for a vehicle
+exports.bookingRouter.get('/booking/debug/vehicle/:vehicleId', booking_contoller_1.debugVehicleBookings);
