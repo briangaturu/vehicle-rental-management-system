@@ -1,7 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.createUser = exports.getUserById = exports.getUsers = void 0;
+exports.updateProfileImage = exports.deleteUser = exports.updateUser = exports.createUser = exports.getUserById = exports.getUsers = void 0;
 const users_service_1 = require("./users.service");
+const db_1 = __importDefault(require("../drizzle/db"));
+const schema_1 = require("../drizzle/schema");
+const drizzle_orm_1 = require("drizzle-orm");
 const getUsers = async (req, res) => {
     try {
         const allUsers = await (0, users_service_1.getUsersService)();
@@ -58,23 +64,18 @@ const createUser = async (req, res) => {
 };
 exports.createUser = createUser;
 const updateUser = async (req, res) => {
-    const usersId = parseInt(req.params.id); // This is the ID from the URL, which is the user to update
+    console.log(req.body);
+    const usersId = parseInt(req.params.id);
     if (isNaN(usersId)) {
         res.status(400).json({ error: "Invalid user ID" });
         return;
     }
-    // Destructure fields from req.body. We no longer need userId from body here
     const { firstname, lastname, email, password, contact, address } = req.body;
-    // Your existing validation: All fields are required. Keep this as per your instruction.
-    // Note: For a PUT (update) operation, usually not all fields are strictly required,
-    // but I'm keeping your original validation logic here as per your request.
     if (!firstname || !lastname || !email || !password || !contact || !address) {
         res.status(400).json({ error: "All fields are required" });
         return;
     }
     try {
-        // CORRECTED LINE: Pass usersId (from req.params.id) to updateUserServices
-        // The payload for updateUserServices should contain the fields to update.
         const updatedUser = await (0, users_service_1.updateUserServices)(usersId, { firstname, lastname, email, password, contact, address });
         if (updatedUser == null) {
             // Service might return null if user not found or update failed (depending on its implementation)
@@ -109,3 +110,37 @@ const deleteUser = async (req, res) => {
     }
 };
 exports.deleteUser = deleteUser;
+const updateProfileImage = async (req, res) => {
+    const userId = parseInt(req.params.id);
+    const { profileUrl } = req.body;
+    if (isNaN(userId)) {
+        return res.status(400).json({ error: "Invalid user ID" });
+    }
+    if (!profileUrl) {
+        return res.status(400).json({ error: "Profile URL is required" });
+    }
+    try {
+        // Update only the profileUrl and updatedAt fields
+        const updatedUser = await db_1.default.update(schema_1.users)
+            .set({
+            profileUrl,
+            updatedAt: new Date()
+        })
+            .where((0, drizzle_orm_1.eq)(schema_1.users.userId, userId))
+            .returning();
+        if (updatedUser.length === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json({
+            message: "Profile image updated successfully",
+            user: updatedUser[0]
+        });
+    }
+    catch (error) {
+        console.error("Profile image update error:", error);
+        return res.status(500).json({
+            error: error.message || "Failed to update profile image"
+        });
+    }
+};
+exports.updateProfileImage = updateProfileImage;

@@ -1,5 +1,8 @@
 import {Request, Response} from "express";
-import { createUserServices,deleteUserServices,getUserByIdServices,getUsersService,updateUserServices } from "./users.service";
+import { createUserServices,deleteUserServices,getUserByIdServices,getUsersService,updateUserProfileImage,updateUserServices } from "./users.service";
+import db from "../drizzle/db";
+import { users } from "../drizzle/schema";
+import { eq } from "drizzle-orm";
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
@@ -51,25 +54,24 @@ export const createUser = async (req: Request, res: Response) => {
 }
 
 export const updateUser = async (req: Request, res: Response) => {
-    const usersId = parseInt(req.params.id); // This is the ID from the URL, which is the user to update
+
+    console.log(req.body)
+    const usersId = parseInt(req.params.id);
     if (isNaN(usersId)) {
         res.status(400).json({ error: "Invalid user ID" });
         return;
     }
-    // Destructure fields from req.body. We no longer need userId from body here
+   
     const { firstname, lastname, email, password, contact, address } = req.body;
 
-    // Your existing validation: All fields are required. Keep this as per your instruction.
-    // Note: For a PUT (update) operation, usually not all fields are strictly required,
-    // but I'm keeping your original validation logic here as per your request.
+    
     if (!firstname || !lastname || !email || !password || !contact || !address) {
         res.status(400).json({ error: "All fields are required" });
         return;
     }
 
     try {
-        // CORRECTED LINE: Pass usersId (from req.params.id) to updateUserServices
-        // The payload for updateUserServices should contain the fields to update.
+       
         const updatedUser = await updateUserServices(usersId, { firstname, lastname, email, password, contact, address });
         if (updatedUser == null) {
             // Service might return null if user not found or update failed (depending on its implementation)
@@ -98,3 +100,41 @@ export const deleteUser = async (req: Request, res: Response) => {
         res.status(500).json({ error:error.message || "Failed to delete user" });
     }    
 }
+
+export const updateProfileImage = async (req: Request, res: Response) => {
+    const userId = parseInt(req.params.id);
+    const { profileUrl } = req.body;
+
+    if (isNaN(userId)) {
+        return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    if (!profileUrl) {
+        return res.status(400).json({ error: "Profile URL is required" });
+    }
+
+    try {
+        // Update only the profileUrl and updatedAt fields
+        const updatedUser = await db.update(users)
+            .set({ 
+                profileUrl,
+                updatedAt: new Date()
+            })
+            .where(eq(users.userId, userId))
+            .returning();
+
+        if (updatedUser.length === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.status(200).json({
+            message: "Profile image updated successfully",
+            user: updatedUser[0]
+        });
+    } catch (error: any) {
+        console.error("Profile image update error:", error);
+        return res.status(500).json({ 
+            error: error.message || "Failed to update profile image" 
+        });
+    }
+};

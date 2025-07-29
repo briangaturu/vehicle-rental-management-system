@@ -1,17 +1,21 @@
-import { migrate } from 'drizzle-orm/postgres-js/migrator';
-import db from '../drizzle/db';
+import { migrate } from "drizzle-orm/neon-serverless/migrator";
+import { drizzle } from "drizzle-orm/neon-serverless";
+import { Pool } from "@neondatabase/serverless";
+import * as dotenv from "dotenv";
 
-async function migration() {
-    console.log("Starting migration...");
-    await migrate(db, {
-        migrationsFolder:__dirname + "/migrations" 
-    });
+dotenv.config();
 
-    console.log("Migration completed successfully.");
-    process.exit(0);
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const db = drizzle(pool);
+
+async function main() {
+  console.log("Running migrations...");
+  await migrate(db, { migrationsFolder: "./src/drizzle/migrations" });
+  console.log("Migrations completed!");
+  process.exit(0);
 }
 
-migration().catch((error) => {
-    console.log("error", error);
-    process.exit(1);
+main().catch((err) => {
+  console.error("Migration failed:", err);
+  process.exit(1);
 });

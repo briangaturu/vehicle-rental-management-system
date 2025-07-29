@@ -18,6 +18,7 @@ exports.users = (0, pg_core_1.pgTable)("users", {
     password: (0, pg_core_1.varchar)("password", { length: 255 }).notNull(),
     contact: (0, pg_core_1.varchar)("contact", { length: 20 }),
     address: (0, pg_core_1.varchar)("address", { length: 255 }),
+    profileUrl: (0, pg_core_1.varchar)("profileUrl", { length: 255 }), // <-- Add this line
     role: (0, exports.roleEnum)("role").default("user").notNull(),
     createdAt: (0, pg_core_1.timestamp)("createdAt").defaultNow(),
     updatedAt: (0, pg_core_1.timestamp)("updatedAt").defaultNow(),

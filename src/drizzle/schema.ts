@@ -20,6 +20,7 @@ export const users = pgTable("users", {
   password: varchar("password", { length: 255 }).notNull(),
   contact: varchar("contact", { length: 20 }),
   address: varchar("address", { length: 255 }),
+  profileUrl: varchar("profileUrl", { length: 255 }), // <-- Add this line
   role: roleEnum("role").default("user").notNull(),
   createdAt: timestamp("createdAt").defaultNow(),
   updatedAt: timestamp("updatedAt").defaultNow(),

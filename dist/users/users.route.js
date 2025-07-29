@@ -13,7 +13,8 @@ exports.userRouter.get('/users/:id', users_controller_1.getUserById);
 exports.userRouter.post('/users', users_controller_1.createUser);
 // Update an existing user
 exports.userRouter.put('/users/:id', users_controller_1.updateUser);
-// Update an existing user with partial fields
-// userRouter.patch('/users/:id', updateUserPartial);
+//Update an existing user with partial fields
+//userRouter.patch('/users/:id', updateUserPartial);
 // Delete an existing user
 exports.userRouter.delete('/users/:id', users_controller_1.deleteUser);
+exports.userRouter.put('/users/:id/profile-image', users_controller_1.updateProfileImage);

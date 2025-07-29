@@ -42,3 +42,19 @@ export const deleteUserServices = async(userId:number):Promise<string>=>{
 await db.delete(users).where(eq(users.userId,userId))
  return "User deleted successfully 🎉"
 }
+
+export const updateUserProfileImage = async (userId: number, profileUrl: string) => {
+    try {
+        const result = await db.update(users)
+            .set({ 
+                profileUrl,
+                updatedAt: new Date()
+            })
+            .where(eq(users.userId, userId))
+            .returning();
+        
+        return result[0] || null;
+    } catch (error) {
+        throw error;
+    }
+};

@@ -229,8 +229,8 @@ const createCheckoutSession = async (req, res) => {
                 bookingId: bookingId ? String(bookingId) : '',
                 userId: userId ? String(userId) : '',
             },
-            success_url: 'http://localhost:5173/user',
-            cancel_url: 'http://localhost:5173/user',
+            success_url: 'https://vehicle-rental-mgnt-system.netlify.app/user',
+            cancel_url: 'https://vehicle-rental-mgnt-system.netlify.app/user',
         });
         res.status(200).json({ url: session.url });
     }
