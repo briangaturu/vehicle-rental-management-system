@@ -23,7 +23,7 @@ ticketRouter.get('/ticket/user/:id',getTicketByUserId);
 ticketRouter.post('/ticket',createTicket);
 
 //update ticket
-ticketRouter.put('/ticket/:id',updateTicket);
+ticketRouter.patch('/ticket/:id', updateTicket);
 
 //delete ticket
 ticketRouter.delete('/ticket/:id',deleteTicketById);

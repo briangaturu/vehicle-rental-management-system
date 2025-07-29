@@ -15,6 +15,13 @@
       "when": 1753724300016,
       "tag": "0001_solid_stepford_cuckoos",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1753783352121,
+      "tag": "0002_typical_peter_parker",
+      "breakpoints": true
     }
   ]
 }

@@ -120,6 +120,7 @@ export const supportTickets = pgTable("supporTickets", {
   subject: varchar("subject", { length: 255 }).notNull(),
   description: text("description").notNull(),
   status: varchar("status", { length: 50 }).default("Open"),
+  adminResponse: text("adminResponse"),
   createdAt: timestamp("createdAt").defaultNow(),
   updatedAt: timestamp("updatedAt").defaultNow(),
 });

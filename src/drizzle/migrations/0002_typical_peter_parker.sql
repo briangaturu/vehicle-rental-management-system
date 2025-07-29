@@ -1,0 +1,1 @@
+ALTER TABLE "supporTickets" ADD COLUMN "adminResponse" text;

@@ -106,22 +106,22 @@ const updateTicket = async (req, res) => {
         res.status(404).json({ error: "Invalid ticket id!" });
         return;
     }
-    const { subject, description, userId } = req.body;
-    if (!subject || !description || !userId) {
-        res.status(400).json({ error: 'All fields Are Required!' });
+    const updateFields = req.body;
+    if (Object.keys(updateFields).length === 0) {
+        res.status(400).json({ error: 'No fields provided for update!' });
         return;
     }
     try {
-        const createTicket = await (0, supportTicket_service_1.updateTicketServices)(ticketId, { subject, description, userId });
-        if (!exports.updateTicket) {
-            res.status(404).json({ error: "Failed to create ticket" });
+        const result = await (0, supportTicket_service_1.updateTicketServices)(ticketId, updateFields);
+        if (!result) {
+            res.status(404).json({ error: "Failed to update ticket" });
         }
         else {
-            res.status(200).json(createTicket);
+            res.status(200).json({ message: result });
         }
     }
     catch (error) {
-        res.status(500).json({ error: error.message || "error occured Failed to update ticket" });
+        res.status(500).json({ error: error.message || "Error occurred. Failed to update ticket." });
     }
 };
 exports.updateTicket = updateTicket;

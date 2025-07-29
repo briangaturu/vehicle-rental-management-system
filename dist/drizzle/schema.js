@@ -94,6 +94,7 @@ exports.supportTickets = (0, pg_core_1.pgTable)("supporTickets", {
     subject: (0, pg_core_1.varchar)("subject", { length: 255 }).notNull(),
     description: (0, pg_core_1.text)("description").notNull(),
     status: (0, pg_core_1.varchar)("status", { length: 50 }).default("Open"),
+    adminResponse: (0, pg_core_1.text)("adminResponse"),
     createdAt: (0, pg_core_1.timestamp)("createdAt").defaultNow(),
     updatedAt: (0, pg_core_1.timestamp)("updatedAt").defaultNow(),
 });

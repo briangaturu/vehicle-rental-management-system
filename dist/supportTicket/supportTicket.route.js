@@ -18,6 +18,6 @@ exports.ticketRouter.get('/ticket/user/:id', supportTicket_controller_1.getTicke
 //create a ticket
 exports.ticketRouter.post('/ticket', supportTicket_controller_1.createTicket);
 //update ticket
-exports.ticketRouter.put('/ticket/:id', supportTicket_controller_1.updateTicket);
+exports.ticketRouter.patch('/ticket/:id', supportTicket_controller_1.updateTicket);
 //delete ticket
 exports.ticketRouter.delete('/ticket/:id', supportTicket_controller_1.deleteTicketById);
