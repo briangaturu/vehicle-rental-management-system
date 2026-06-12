@@ -13,7 +13,7 @@ import {
   getPaymentByUserId,
   createCheckoutSession,
 } from "./payment.controller"; 
-import { webhookHandler } from "./payment.webhook";
+import { initiateMpesaSTKPush, mpesaCallback, webhookHandler } from "./payment.webhook";
 
 export const paymentRouter = Router();
 
@@ -45,3 +45,7 @@ paymentRouter.delete("/payments/:id", deletePayment);
 paymentRouter.post("/payments/checkout-session", createCheckoutSession);
 
 paymentRouter.post("/webhook", webhookHandler);
+
+paymentRouter.post("/payments/mpesa/stkpush", initiateMpesaSTKPush);
+
+paymentRouter.post("/payments/mpesa/callback", mpesaCallback);

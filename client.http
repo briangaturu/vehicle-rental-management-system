@@ -25,9 +25,9 @@ PUT http://localhost:5000/api/users/2
 content-type: application/json
 
 {
- "firstname": "jane",
-    "lastname": "maina",
-    "email": "jane03@gmail.com",
+ "firstname": "brian",
+    "lastname": "gaturu",
+    "email": "briangaturu03@gmail.com",
     "password":"password2",
     "contact":"+254702345678",
     "address":"789 kagere Road, Mombasa",
@@ -53,8 +53,8 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "james03@gmail.com",
-    "password": "12345678" 
+  "email": "briangaturu03@gmail.com",
+    "password": "123456789" 
 }
 
 //vehicles

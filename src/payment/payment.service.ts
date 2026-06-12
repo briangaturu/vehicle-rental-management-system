@@ -102,3 +102,32 @@ export const deletePaymentService = async (paymentId: number): Promise<string> =
   await db.delete(payments).where(eq(payments.paymentId, paymentId));
   return "Payment deleted successfully ❌";
 };
+
+
+
+// M-Pesa Callback — upsert payment and confirm booking
+export const mpesaCallbackService = async (
+  bookingId: number,
+  userId: number,
+  amount: string,
+  transactionId: string,
+  status: "Paid" | "Failed"
+): Promise<string> => {
+  await db.insert(payments).values({
+    bookingId,
+    userId,
+    amount,
+    paymentStatus: status,
+    paymentMethod: "Mpesa",
+    transactionId,
+  } as TPaymentInsert);
+
+  if (status === "Paid") {
+    await db
+      .update(bookings)
+      .set({ bookingStatus: "Confirmed" })
+      .where(eq(bookings.bookingId, bookingId));
+  }
+
+  return "M-Pesa payment recorded ✅";
+};
